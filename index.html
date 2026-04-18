@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Parking</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #eef2f3;
+      text-align: center;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 15px;
+      font-size: 26px;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .spots {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .spot {
+      width: 130px;
+      height: 130px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    .free {
+      background: #22c55e;
+    }
+
+    .occupied {
+      background: #ef4444;
+    }
+
+    .status {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .counter {
+      font-size: 20px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    iframe {
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: #3b82f6;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<header>🚗 Smart Parking System</header>
+
+<div class="container">
+
+  <h2>Statusi i Parkingut</h2>
+
+  <div class="counter">
+    Vende të lira: <span id="freeCount">0</span>/3
+  </div>
+
+  <div class="spots">
+    <div id="spot1" class="spot free">
+      Vend 1
+      <div class="status">Bosh</div>
+    </div>
+
+```
+<div id="spot2" class="spot occupied">
+  Vend 2
+  <div class="status">Zënë</div>
+</div>
+
+<div id="spot3" class="spot free">
+  Vend 3
+  <div class="status">Bosh</div>
+</div>
+```
+
+  </div>
+
+<button onclick="changeStatus()">Ndrysho Statusin</button>
+
+  <h2>Lokacioni i Parkingut</h2>
+
+  <iframe
+    src="https://www.google.com/maps?q=41.3275,19.8187&z=15&output=embed"
+    width="80%"
+    height="300">
+  </iframe>
+
+</div>
+
+<script>
+
+function updateCounter() {
+  let free = 0;
+
+  document.querySelectorAll('.spot').forEach(spot => {
+    if (spot.classList.contains('free')) free++;
+  });
+
+  document.getElementById('freeCount').innerText = free;
+}
+
+function changeStatus() {
+  const spots = ["spot1", "spot2", "spot3"];
+
+  spots.forEach(id => {
+    const el = document.getElementById(id);
+    const isFree = Math.random() > 0.5;
+
+    el.className = "spot " + (isFree ? "free" : "occupied");
+    el.querySelector(".status").innerText = isFree ? "Bosh" : "Zënë";
+  });
+
+  updateCounter();
+}
+
+// update automatik çdo 4 sekonda
+setInterval(changeStatus, 4000);
+
+// fillimi
+updateCounter();
+
+</script>
+
+</body>
+</html>
